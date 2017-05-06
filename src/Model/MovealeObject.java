@@ -1,6 +1,5 @@
-package Model;
+package model;
 
-import java.awt.Graphics; 
 
 public abstract class MovealeObject extends Entity {
 	protected Direction direction;
@@ -12,9 +11,26 @@ public abstract class MovealeObject extends Entity {
 		this.speed = speed;
 		image = null;
 	}
-	public  abstract void draw(Graphics g) ;	
 		
-		
+	public abstract void move();
+
+	public Direction getDirection() {
+		return direction;
+	}
+
+	public void setDirection(Direction direction) {
+		this.direction = direction;
+	}
+
+	public int getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}	
 	
-	
+	public abstract void startMove();
+	public abstract void stopMove();
+
 }

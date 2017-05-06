@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 public class Position {
 	private int x;
@@ -45,7 +45,18 @@ public class Position {
 	public void setY(int y) {
 		this.y = y;
 	}
-	
+	public void increateX(int n){
+		this.x+=n;
+	}
+	public void increateY(int n){
+		this.y+=n;
+	}
+	public void decreateX(int n){
+		this.x-=n;
+	}
+	public void decreateY(int n){
+		this.y-=n;
+	}
 	
 
 }

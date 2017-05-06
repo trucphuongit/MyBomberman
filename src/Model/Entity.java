@@ -1,9 +1,10 @@
-package Model;
+package model;
 
 import java.awt.Graphics; 
 import java.awt.Image;
+import java.util.Observable;
 
-public abstract class Entity {
+public abstract class Entity extends Observable{
 	protected  Position position;
 	protected int width;
 	protected int height;
