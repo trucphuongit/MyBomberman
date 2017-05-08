@@ -9,15 +9,15 @@ import javax.swing.ImageIcon;
 public class Brick extends Entity {
 
 		
-	public Brick(Position position, int width, int height, EntityManager manager) {
-		super(position, width, height, manager);
+	public Brick(Position position, EntityManager manager) {
+		super(position, manager);
 		image = new ImageIcon("image/brick.jpg").getImage();
 	}
 
 	@Override
 	public void draw(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
-			g2.drawImage(image, position.getX(), position.getY(), width, height, null);
+			g2.drawImage(image, position.getX(), position.getY(), WIDTH, HEIGHT, null);
 	}
 
 

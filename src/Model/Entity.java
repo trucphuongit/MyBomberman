@@ -1,37 +1,31 @@
 package model;
 
-import java.awt.Graphics; 
+import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.util.Observable;
 
-public abstract class Entity extends Observable{
-	protected  Position position;
-	protected int width;
-	protected int height;
+public abstract class Entity extends Observable {
+	protected Position position;
+	protected static final int WIDTH = 50;
+	protected static final int HEIGHT = 50;
 	protected EntityManager manager;
 	protected Image image;
-	
-	
-	
-	public Entity(Position position, int width, int height, EntityManager manager) {
+
+	public Entity(Position position, EntityManager manager) {
 		super();
 		this.position = position;
-		this.width = width;
-		this.height = height;
 		this.manager = manager;
 	}
-	
-
 
 	public Entity() {
 	}
 
-
-
 	public boolean toBeKilled() {
 		return true;
 	}
-	public abstract void draw(Graphics g) ;
+
+	public abstract void draw(Graphics g);
 
 	public Position getPosition() {
 		return position;
@@ -42,21 +36,11 @@ public abstract class Entity extends Observable{
 	}
 
 	public int getWidth() {
-		return width;
+		return WIDTH;
 	}
-
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
 	public int getHeight() {
-		return height;
+		return HEIGHT;
 	}
-
-	public void setHeight(int height) {
-		this.height = height;
-	}
-
 	public EntityManager getManager() {
 		return manager;
 	}
@@ -65,5 +49,8 @@ public abstract class Entity extends Observable{
 		this.manager = manager;
 	}
 
-	
+	public Rectangle getBounds() {
+		return new Rectangle(this.position.getX(), this.position.getY(), WIDTH, HEIGHT);
+	}
+
 }
