@@ -37,23 +37,27 @@ public class Bomb extends Entity implements Runnable {
 			}
 			manager.addEntity(listFlame);
 			manager.removeEntity(this);
-			for (Entity entity : listFlame) {
-				Flame enFlame = (Flame) entity;
-				enFlame.collision();
-			}
 
 			setChanged();
 			notifyObservers();
 
 			Thread.sleep(2000);
+			
 			manager.removeEntity(listFlame);
 			setChanged();
 			notifyObservers();
+			
 		} catch (InterruptedException e) {
 
 			e.printStackTrace();
 		}
 
+	}
+
+	@Override
+	public void collisionable() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

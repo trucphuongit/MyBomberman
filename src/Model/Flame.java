@@ -18,30 +18,37 @@ public class Flame extends Entity {
 	public void draw(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.drawImage(image, position.getX(), position.getY(), WIDTH, HEIGHT, null);
-
 	}
 
-	public void collision() {
-		Position pos = this.getPosition();
-		Entity colEntity = manager.getEntityFromPosition(pos);
-		if (this.getBounds().intersects(manager.getPlayer().getBounds())) {
-			manager.getPlayer().die();
-			manager.removeEntity(manager.getPlayer());
+	@Override
+	public void collisionable() {
+		for (Entity entity : manager.getList()) {
+			if (entity instanceof Brick) {
+				Brick b = (Brick) entity;
+				if (this.getBounds().intersects(b.getBounds())) {
+					manager.removeEntity(b);
+				}
+			} else if (entity instanceof Monster) {
+				Monster m = (Monster) entity;
+				if (this.getBounds().intersects(m.getBounds())) {
+					manager.removeEntity(m);
+				}
+//			} else if (entity instanceof Wall) {
+//				Wall w = (Wall) entity;
+//				if (this.getBounds().intersects(w.getBounds())) {
+//					manager.removeEntity(this);
+//				}
 
-		}
-//		for (Monster m : manager.getMonsters()) {
-//			if (this.getBounds().intersects(m.getBounds())) {
-//				manager.removeEntity(m);
-//			}
-//		}
-		if (colEntity instanceof Brick) {
-			Brick b = (Brick) colEntity;
-			if (this.getBounds().intersects(b.getBounds())) {
-				manager.removeEntity(b);
+			} else if (entity instanceof Player) {
+				Player p = (Player) entity;
+				if (this.getBounds().intersects(p.getBounds())) {
+					manager.getPlayer().stopMove();
+					manager.removeEntity(p);
+
+				}
 			}
+			setChanged();
+			notifyObservers();
 		}
-		setChanged();
-		notifyObservers();
 	}
-
 }

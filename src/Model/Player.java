@@ -69,7 +69,7 @@ public class Player extends MovealeObject implements Observer {
 
 	@Override
 	public void startMove() {
-
+		
 	}
 
 	@Override
@@ -108,10 +108,11 @@ public class Player extends MovealeObject implements Observer {
 		numberOfBombWasCreated--;
 	}
 
-	public void die() {
-		stopMove();
-		manager.removeEntity(this);
+	@Override
+	public void collisionable() {
+		// TODO Auto-generated method stub
+
 	}
 
-
+	
 }

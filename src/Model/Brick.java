@@ -20,6 +20,12 @@ public class Brick extends Entity {
 			g2.drawImage(image, position.getX(), position.getY(), WIDTH, HEIGHT, null);
 	}
 
+	@Override
+	public void collisionable() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 }

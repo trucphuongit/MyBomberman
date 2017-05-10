@@ -106,5 +106,11 @@ public class Wall extends Entity {
 
 		
 	}
+
+	@Override
+	public void collisionable() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

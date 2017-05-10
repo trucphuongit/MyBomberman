@@ -38,9 +38,11 @@ public abstract class Entity extends Observable {
 	public int getWidth() {
 		return WIDTH;
 	}
+
 	public int getHeight() {
 		return HEIGHT;
 	}
+
 	public EntityManager getManager() {
 		return manager;
 	}
@@ -53,4 +55,9 @@ public abstract class Entity extends Observable {
 		return new Rectangle(this.position.getX(), this.position.getY(), WIDTH, HEIGHT);
 	}
 
+	public boolean collision(Entity other) {
+		return this.getBounds().intersects(other.getBounds());
+	}
+
+	public abstract void collisionable();
 }

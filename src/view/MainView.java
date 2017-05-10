@@ -29,6 +29,7 @@ public class MainView extends JFrame implements Observer{
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
+				entityManager.collisionable();
 				entityManger.draw(g);
 			}
 		};
@@ -39,10 +40,7 @@ public class MainView extends JFrame implements Observer{
 				gameController.keyRelease(e.getKeyCode());
 			}
 		});
-		
-		
 		mainContent.setFocusable(true);
-		
 		getContentPane().add(mainContent, BorderLayout.CENTER);
 		
 		this.setSize(800, 590);
