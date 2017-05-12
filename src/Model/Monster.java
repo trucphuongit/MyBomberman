@@ -79,7 +79,7 @@ public class Monster extends MovealeObject implements Runnable {
 	}
 
 	@Override
-	public void collisionable() {
+	public void isCollision() {
 		// TODO Auto-generated method stub
 		
 	}

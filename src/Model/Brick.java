@@ -21,7 +21,7 @@ public class Brick extends Entity {
 	}
 
 	@Override
-	public void collisionable() {
+	public void isCollision() {
 		// TODO Auto-generated method stub
 		
 	}

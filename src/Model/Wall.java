@@ -108,7 +108,7 @@ public class Wall extends Entity {
 	}
 
 	@Override
-	public void collisionable() {
+	public void isCollision() {
 		// TODO Auto-generated method stub
 		
 	}

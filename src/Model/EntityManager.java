@@ -15,12 +15,11 @@ public class EntityManager extends Observable {
 		player = new Player(new Position(50, 40), this, Direction.N, 50, 5, 0);
 		this.list = new ArrayList<>();
 		list.add(new Wall());
-		list.add(new Brick(new Position(100, 90), this));
+		list.add(new Brick(new Position(360, 360), this));
 		list.add(new Brick(new Position(400, 360), this));
 		list.add(new Brick(new Position(440, 360), this));
 		list.add(new Brick(new Position(480, 360), this));
 		list.add(new Monster(new Position(530, 360), this, Direction.N, 30));
-		list.add(player);
 		// monsters = new ArrayList<Monster>();
 		// monsters.add(new Monster(new Position(530, 360), this, Direction.N,
 		// 50));
@@ -47,7 +46,7 @@ public class EntityManager extends Observable {
 		notifyChanged();
 	}
 
-	public void removePlayer() {
+	public void removePlayer(Player player) {
 		this.deleteObserver(player);
 		notifyChanged();
 	}
@@ -59,9 +58,9 @@ public class EntityManager extends Observable {
 				res = list.get(i);
 			}
 		}
-		// if (player.getPosition().equals(position)) {
-		// res = player;
-		// }
+		if (player.getPosition().equals(position)) {
+			res = player;
+		}
 		return res;
 
 	}
@@ -80,6 +79,14 @@ public class EntityManager extends Observable {
 		return list.size();
 	}
 
+	public void collisionable() {
+		for (Entity entity : list) {
+			entity.isCollision();
+		}
+		player.isCollision();
+
+	}
+
 	public void move(Direction direction) {
 		player.setDirection(direction);
 		player.move();
@@ -92,14 +99,6 @@ public class EntityManager extends Observable {
 	public void putBoom() {
 		player.putBoom();
 	}
-
-	public void collisionable() {
-		for (Entity entity : list) {
-			entity.collisionable();
-		}
-		notifyChanged();
-	}
-
 
 	public void startMoveableObject() {
 		for (Entity entity : list) {

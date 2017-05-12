@@ -35,29 +35,27 @@ public class Bomb extends Entity implements Runnable {
 			for (int i = y - 150; i < y + 150; i += 50) {
 				listFlame.add(new Flame(new Position(x, i), manager));
 			}
+			// add list flame vao sau khi bomb no
 			manager.addEntity(listFlame);
 			manager.removeEntity(this);
-
 			setChanged();
 			notifyObservers();
 
 			Thread.sleep(2000);
-			
+			// delete list flame
 			manager.removeEntity(listFlame);
 			setChanged();
 			notifyObservers();
-			
 		} catch (InterruptedException e) {
-
 			e.printStackTrace();
 		}
 
 	}
 
 	@Override
-	public void collisionable() {
+	public void isCollision() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
