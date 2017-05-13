@@ -2,36 +2,39 @@ package model;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Random;
+import java.util.Vector;
 
 public class EntityManager extends Observable {
 	private List<Entity> list;
 	private Player player;
-	// private ArrayList<Monster> monsters;
 
 	public EntityManager() {
 		player = new Player(new Position(50, 40), this, Direction.N, 50, 5, 0);
-		this.list = new ArrayList<>();
-		list.add(new Wall());
+		this.list = new Vector<>();
+		list.add(new Wall(new Position(0, 0),this));
+		list.add(new Wall(new Position(0, 50),this));
+		list.add(new Wall(new Position(0, 100),this));
+		list.add(new Wall(new Position(0, 150),this));
+		list.add(new Wall(new Position(0, 200),this));
+		list.add(new Wall(new Position(0, 250),this));
 		list.add(new Brick(new Position(360, 360), this));
 		list.add(new Brick(new Position(400, 360), this));
 		list.add(new Brick(new Position(440, 360), this));
 		list.add(new Brick(new Position(480, 360), this));
 		list.add(new Monster(new Position(530, 360), this, Direction.N, 30));
-		// monsters = new ArrayList<Monster>();
-		// monsters.add(new Monster(new Position(530, 360), this, Direction.N,
-		// 50));
 
 	}
 
-	public void addEntity(List<Entity> list) {
+	public synchronized void addEntity(List<Entity> list) {
 		this.list.addAll(list);
 		notifyChanged();
 	}
 
-	public void addEntity(Entity e) {
+	public synchronized void addEntity(Entity e) {
 		this.list.add(e);
 		notifyChanged();
 	}
@@ -62,37 +65,36 @@ public class EntityManager extends Observable {
 			res = player;
 		}
 		return res;
-
 	}
 
 	public void draw(Graphics g) {
 		player.draw(g);
-		for (Entity entity : list) {
-			entity.draw(g);
+
+		Iterator<Entity> itr = list.iterator();
+		while (itr.hasNext()) {
+			Entity e = itr.next();
+			e.draw(g);
 		}
-		// for (Monster monster : monsters) {
-		// monster.draw(g);
-		// }
 	}
 
 	public int size() {
 		return list.size();
 	}
 
-	public void collisionable() {
+	public synchronized void collisionable() {
+		List<Entity> listCollision = new Vector<>();
 		for (Entity entity : list) {
-			entity.isCollision();
+				listCollision.addAll(entity.getCollision());				
 		}
-		player.isCollision();
+		listCollision.addAll(player.getCollision());				
+		player.getCollision();
+		list.removeAll(listCollision);
 
 	}
 
 	public void move(Direction direction) {
 		player.setDirection(direction);
 		player.move();
-		// for (Monster monster : monsters) {
-		// monster.move();
-		// }
 		notifyChanged();
 	}
 
@@ -101,7 +103,9 @@ public class EntityManager extends Observable {
 	}
 
 	public void startMoveableObject() {
-		for (Entity entity : list) {
+		Iterator<Entity> itr = list.iterator();
+		while (itr.hasNext()) {
+			Entity entity = itr.next();
 			if (entity instanceof MovealeObject)
 				((MovealeObject) entity).startMove();
 		}
@@ -116,6 +120,21 @@ public class EntityManager extends Observable {
 		return list;
 	}
 
+	public List<Entity> getBoundsList(Entity entity) {
+		List<Entity> list = new Vector<>();
+		Iterator<Entity> itr = this.list.iterator();
+		while (itr.hasNext()) {
+			Entity e = itr.next();
+			if (e.getBounds().intersects(entity.getBounds())) {
+				list.add(e);
+			}
+		}
+		if (this.player.getBounds().intersects(entity.getBounds()))
+			list.add(player);
+		return list;
+
+	}
+
 	public void setList(List<Entity> list) {
 		this.list = list;
 	}
@@ -127,13 +146,5 @@ public class EntityManager extends Observable {
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
-
-	// public ArrayList<Monster> getMonsters() {
-	// return monsters;
-	// }
-
-	// public void setMonsters(ArrayList<Monster> monsters) {
-	// this.monsters = monsters;
-	// }
 
 }

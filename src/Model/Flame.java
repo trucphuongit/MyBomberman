@@ -2,12 +2,18 @@ package model;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 
+import view.MainView;
+
 public class Flame extends Entity {
 	public static final int FLAME_TIME = 100;
+	MainView view;
 
 	public Flame(Position position, EntityManager manager) {
 		super(position, manager);
@@ -21,38 +27,23 @@ public class Flame extends Entity {
 
 	}
 
-	public void isCollision() {
+	public List<Entity> getCollision() {
+		List<Entity> listEntityConlision = new Vector<>();
+		Iterator<Entity> it = manager.getBoundsList(this).iterator();
+		while (it.hasNext()) {
+			Entity en = it.next();
 
-		// if (this.getBounds().intersects(manager.getPlayer().getBounds())) {
-		// manager.getPlayer().die();
-		// manager.removeEntity(manager.getPlayer());
-		//
-		// }
-		// for (Monster m : manager.getMonsters()) {
-		// if (this.getBounds().intersects(m.getBounds())) {
-		// manager.removeEntity(m);
-		// }
-		// }
-
-		for (Entity en : manager.getList()) {
 			if (en instanceof Brick) {
-				Brick b = (Brick) en;
-				if (this.getBounds().intersects(b.getBounds())) {
-					manager.removeEntity(b);
-				}
+				listEntityConlision.add(en);
 			}
 			if (en instanceof Monster) {
-				Monster m = (Monster) en;
-				if (this.getBounds().intersects(m.getBounds())) {
-					manager.removeEntity(m);
-				}
+				listEntityConlision.add(en);
 			}
-			if (this.getBounds().intersects(manager.getPlayer().getBounds())) {
-				manager.removePlayer(manager.getPlayer());
+			if (en instanceof Wall) {
+				listEntityConlision.add(this);
 			}
 		}
-		setChanged();
-		notifyObservers();
+		return listEntityConlision;
 	}
 
 }

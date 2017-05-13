@@ -3,7 +3,11 @@ package model;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Observable;
+import java.util.Vector;
 
 public abstract class Entity extends Observable {
 	protected Position position;
@@ -11,6 +15,8 @@ public abstract class Entity extends Observable {
 	protected static final int HEIGHT = 50;
 	protected EntityManager manager;
 	protected Image image;
+	
+	public static final List<Entity> EMPTY_LIST = new Vector<>();
 
 	public Entity(Position position, EntityManager manager) {
 		super();
@@ -53,6 +59,8 @@ public abstract class Entity extends Observable {
 		return new Rectangle(this.position.getX(), this.position.getY(), WIDTH, HEIGHT);
 	}
 
-	public abstract void isCollision();
+	public  List<Entity> getCollision(){
+		return EMPTY_LIST;
+	};
 	
 }

@@ -113,11 +113,6 @@ public class Player extends MovealeObject implements Observer {
 		manager.removeEntity(this);
 	}
 
-	@Override
-	public void isCollision() {
-		// TODO Auto-generated method stub
-		
-	}
 
 
 }

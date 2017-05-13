@@ -37,6 +37,7 @@ public class Bomb extends Entity implements Runnable {
 			}
 			// add list flame vao sau khi bomb no
 			manager.addEntity(listFlame);
+			Thread.sleep(100);
 			manager.removeEntity(this);
 			setChanged();
 			notifyObservers();
@@ -52,10 +53,5 @@ public class Bomb extends Entity implements Runnable {
 
 	}
 
-	@Override
-	public void isCollision() {
-		// TODO Auto-generated method stub
-
-	}
 
 }
