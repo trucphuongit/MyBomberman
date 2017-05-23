@@ -15,7 +15,7 @@ public abstract class Entity extends Observable {
 	protected static final int HEIGHT = 50;
 	protected EntityManager manager;
 	protected Image image;
-	
+
 	public static final List<Entity> EMPTY_LIST = new Vector<>();
 
 	public Entity(Position position, EntityManager manager) {
@@ -44,9 +44,11 @@ public abstract class Entity extends Observable {
 	public int getWidth() {
 		return WIDTH;
 	}
+
 	public int getHeight() {
 		return HEIGHT;
 	}
+
 	public EntityManager getManager() {
 		return manager;
 	}
@@ -59,8 +61,10 @@ public abstract class Entity extends Observable {
 		return new Rectangle(this.position.getX(), this.position.getY(), WIDTH, HEIGHT);
 	}
 
-	public  List<Entity> getCollision(){
+	public List<Entity> getCollision() {
 		return EMPTY_LIST;
-	};
+	}
 	
+	
+
 }

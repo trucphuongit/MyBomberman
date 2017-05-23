@@ -9,16 +9,17 @@ import view.MainView;
 public class GameController {
 	EntityManager entityManger;
 	MainView view;
-	
+
 	public GameController() {
 		entityManger = new EntityManager();
 		view = new MainView(entityManger, this);
 	}
-	public void start(){
+
+	public void start() {
 		entityManger.startMoveableObject();
 	}
-	
-	public void keyRelease(int keyCode){
+
+	public void keyRelease(int keyCode) {
 		switch (keyCode) {
 		case KeyEvent.VK_UP:
 			entityManger.move(Direction.N);
@@ -35,9 +36,10 @@ public class GameController {
 		case KeyEvent.VK_SPACE:
 			entityManger.putBoom();
 			break;
-			
+
 		default:
 			break;
 		}
 	}
+
 }

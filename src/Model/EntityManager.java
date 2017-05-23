@@ -1,6 +1,8 @@
 package model;
 
 import java.awt.Graphics;
+import java.awt.HeadlessException;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -8,24 +10,26 @@ import java.util.Observable;
 import java.util.Random;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
+
 public class EntityManager extends Observable {
 	private List<Entity> list;
 	private Player player;
 
 	public EntityManager() {
-		player = new Player(new Position(50, 40), this, Direction.N, 50, 5, 0);
+		player = new Player(new Position(50, 50), this, Direction.N, 50, 5, 0);
 		this.list = new Vector<>();
-		list.add(new Wall(new Position(0, 0),this));
-		list.add(new Wall(new Position(0, 50),this));
-		list.add(new Wall(new Position(0, 100),this));
-		list.add(new Wall(new Position(0, 150),this));
-		list.add(new Wall(new Position(0, 200),this));
-		list.add(new Wall(new Position(0, 250),this));
-		list.add(new Brick(new Position(360, 360), this));
-		list.add(new Brick(new Position(400, 360), this));
-		list.add(new Brick(new Position(440, 360), this));
-		list.add(new Brick(new Position(480, 360), this));
-		list.add(new Monster(new Position(530, 360), this, Direction.N, 30));
+		list.add(new Wall(new Position(0, 0), this));
+		list.add(new Wall(new Position(0, 50), this));
+		list.add(new Wall(new Position(0, 100), this));
+		list.add(new Wall(new Position(0, 150), this));
+		list.add(new Wall(new Position(0, 200), this));
+		list.add(new Wall(new Position(0, 250), this));
+		list.add(new Brick(new Position(350, 350), this));
+		list.add(new Brick(new Position(400, 350), this));
+		list.add(new Brick(new Position(450, 350), this));
+		list.add(new Brick(new Position(450, 350), this));
+		list.add(new Monster(new Position(550, 350), this, Direction.N, 30));
 
 	}
 
@@ -54,15 +58,15 @@ public class EntityManager extends Observable {
 		notifyChanged();
 	}
 
-	public Entity getEntityFromPosition(Position position) {
-		Entity res = null;
+	public List<Entity> getEntityFromBound(Rectangle getbound) {
+		List<Entity> res = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).getPosition().equals(position)) {
-				res = list.get(i);
+			if (list.get(i).getBounds().equals(getbound)) {
+				res.add(list.get(i));
 			}
 		}
-		if (player.getPosition().equals(position)) {
-			res = player;
+		if (player.getBounds().equals(getbound)) {
+			res.add(player);
 		}
 		return res;
 	}
@@ -84,10 +88,9 @@ public class EntityManager extends Observable {
 	public synchronized void collisionable() {
 		List<Entity> listCollision = new Vector<>();
 		for (Entity entity : list) {
-				listCollision.addAll(entity.getCollision());				
+			listCollision.addAll(entity.getCollision());
 		}
-		listCollision.addAll(player.getCollision());				
-		player.getCollision();
+		listCollision.addAll(player.getCollision());
 		list.removeAll(listCollision);
 
 	}
@@ -96,12 +99,14 @@ public class EntityManager extends Observable {
 		player.setDirection(direction);
 		player.move();
 		notifyChanged();
+		System.out.println(player.position.getX() + "  " + player.position.getY());
 	}
 
 	public void putBoom() {
 		player.putBoom();
 	}
 
+	// start những thằng tự động di chuyển.
 	public void startMoveableObject() {
 		Iterator<Entity> itr = list.iterator();
 		while (itr.hasNext()) {
@@ -110,6 +115,8 @@ public class EntityManager extends Observable {
 				((MovealeObject) entity).startMove();
 		}
 	}
+
+	
 
 	public void notifyChanged() {
 		setChanged();
@@ -146,5 +153,7 @@ public class EntityManager extends Observable {
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
-
+	// public void gameOverSystem(){
+	// this.
+	// }
 }

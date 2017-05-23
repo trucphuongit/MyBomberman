@@ -15,21 +15,22 @@ import javax.swing.JPanel;
 import controller.GameController;
 import model.EntityManager;
 
-public class MainView extends JFrame implements Observer{
+public class MainView extends JFrame implements Observer {
 	EntityManager entityManger;
 	GameController gameController;
 	JPanel mainContent;
-	
+
 	public MainView(EntityManager entityManager, GameController gameController) {
 		super();
 		this.entityManger = entityManager;
 		this.gameController = gameController;
 		((Observable) entityManager).addObserver(this);
-		mainContent = new JPanel(){
+		mainContent = new JPanel() {
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				entityManager.collisionable();
+
 				entityManger.draw(g);
 			}
 		};
@@ -47,18 +48,18 @@ public class MainView extends JFrame implements Observer{
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		gameController.start();
+
 	}
-	
-	
-	public void initView(){
-		
-		
+
+	public void initView() {
+
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		mainContent.repaint();
 	}
+
 	public void gameOver() {
 		JOptionPane.showMessageDialog(this, "Game Over", "Game Over", JOptionPane.YES_NO_OPTION);
 		System.exit(ABORT);

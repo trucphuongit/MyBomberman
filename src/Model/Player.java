@@ -5,8 +5,11 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 
@@ -49,6 +52,39 @@ public class Player extends MovealeObject implements Observer {
 
 	@Override
 	public void move() {
+		
+		Rectangle rect = null;
+		switch (this.direction) {
+		case N:
+			rect = new Rectangle(this.position.getX(), this.position.getY() - this.speed, WIDTH, HEIGHT);
+
+			break;
+		case S:
+			rect = new Rectangle(this.position.getX(), this.position.getY() +this.speed, WIDTH, HEIGHT);
+
+			break;
+		case E:
+			rect = new Rectangle(this.position.getX() +  this.speed, this.position.getY(), WIDTH, HEIGHT);
+
+			break;
+		case W:
+			rect = new Rectangle(this.position.getX() -  this.speed, this.position.getY(), WIDTH, HEIGHT);
+
+			break;
+
+		default:
+			break;
+		}
+		List<Entity> list = manager.getEntityFromBound(rect);
+		System.out.println(list.toString());
+		
+		Iterator<Entity> listInRectangle = manager.getEntityFromBound(rect).iterator();
+		while (listInRectangle.hasNext()) {
+			Entity e = listInRectangle.next();
+			if (e instanceof Wall || e instanceof Brick || e instanceof Bomb) {
+					return;
+			}
+		}
 		switch (this.direction) {
 		case N:
 			this.position.decreateY(this.speed);
@@ -65,6 +101,7 @@ public class Player extends MovealeObject implements Observer {
 		default:
 			break;
 		}
+
 	}
 
 	@Override
@@ -74,23 +111,7 @@ public class Player extends MovealeObject implements Observer {
 
 	@Override
 	public void stopMove() {
-		switch (this.direction) {
-		case N:
-			this.position.decreateY(0);
-			break;
-		case S:
-			this.position.increateY(0);
-			break;
-		case E:
-			this.position.increateX(0);
-			break;
-		case W:
-			this.position.decreateX(0);
-			break;
-		default:
-			break;
-		}
-		;
+
 	}
 
 	public void putBoom() {
@@ -109,10 +130,21 @@ public class Player extends MovealeObject implements Observer {
 	}
 
 	public void die() {
-		stopMove();
 		manager.removeEntity(this);
 	}
 
+	public List<Entity> getCollision() {
+		List<Entity> listCollision = new ArrayList<>();
 
+		Iterator<Entity> it = manager.getBoundsList(this).iterator();
+		while (it.hasNext()) {
+			Entity en = it.next();
+			if (en instanceof Wall) {
+				if (this.getBounds().intersects(en.getBounds())) {
+				}
+			}
+		}
+		return listCollision;
+	}
 
 }

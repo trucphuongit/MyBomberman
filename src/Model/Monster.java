@@ -3,7 +3,10 @@ package model;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 
@@ -79,5 +82,4 @@ public class Monster extends MovealeObject implements Runnable {
 	}
 
 	
-
 }

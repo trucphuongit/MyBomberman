@@ -42,6 +42,11 @@ public class Flame extends Entity {
 			if (en instanceof Wall) {
 				listEntityConlision.add(this);
 			}
+			if(en instanceof Player){
+				listEntityConlision.add(en);
+				
+			}
+			
 		}
 		return listEntityConlision;
 	}
